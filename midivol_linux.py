@@ -3,11 +3,6 @@ import time
 import mido #python package for midi https://github.com/olemb/mido
 from alsaaudio import Mixer
 
-#linux using amixer (terminal command)
-# from subprocess import call	
-# call(["amixer", "-D", "pulse", "sset", "Master", "0%"])
-# 'Launch Control MIDI 1'
-
 class Midivol():
 	'''
 	Class used to control master volume mixer from midi input (mido) on linux alsa systems
