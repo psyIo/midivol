@@ -8,3 +8,4 @@ mido https://github.com/olemb/mido
 
 windows:
 nircmd http://www.nirsoft.net/utils/nircmd.html
+pygame.midi
