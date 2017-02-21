@@ -21,12 +21,13 @@ class NircmdMixer():
 			pass		
 		return result
 		
-	def setvolume(self, vol):	
+	def setvolume(self, vol, verbose=False):	
 		if vol != self.current_volume:			
 			volume = self.volume_to_int(vol)
 			call(["nircmd", "setsysvolume", str(volume)])			
 			self.current_volume = vol
-			print 'Midivol: Volume set to {}'.format(self.current_volume)
+			if verbose:
+				print 'Midivol: Volume set to {}'.format(self.current_volume)
 			# print str(volume)
 
 class Midivol():
@@ -84,7 +85,7 @@ class Midivol():
 					self.set_volume_from_midi_msg(msg)
 					if self.verbose:			
 						self.log_msg(msg)
-				time.sleep(0.01)
+				time.sleep(0.005)
 		else:
 			raise Exception('"{}" input device not found'.format(self.device))
 			
@@ -100,22 +101,18 @@ class Midivol():
 		'''
 		if val > self.max_volume:
 			val = self.max_volume	
-		# if self.system_mixer.getvolume()[0] != val:
 		self.system_mixer.setvolume(val)
-		# self.log_msg('Volume set to {}'.format(val))
 
 	def channel_gates(self, msg):
 		'''
 		Msg passes gates if channel is as needed
 		'''
-		# return self.channel == msg.channel
 		return self.channel == msg[0][0][0]
 
 	def control_gates(self, msg):
 		'''
 		Msg passes gates if control id is as needed
 		'''
-		# return self.control == msg.control
 		return self.control == msg[0][0][1]
 
 	def set_volume_from_midi_msg(self, msg):
@@ -126,12 +123,8 @@ class Midivol():
 			if not funk(msg):
 				return
 
-		# val = self.midi_to_volume(msg.value)
 		val = self.midi_to_volume(msg[0][0][2])
-		# print 'midi msg value {}'.format(msg[0][0][2])
 		self.set_volume(val)
-		# if self.verbose:			
-			# self.log_msg(msg)
 
 	def log_msg(self, msg):
 		'''
@@ -200,7 +193,6 @@ def display_devices():
 	print '(interf, name, input, output, opened)'
 	for dev in xrange(0, midi.get_count()):
 		print midi.get_device_info(dev)
-	# print 'List of available MIDI devices: ' + repr(mido.get_input_names())
 	quit()
 
 def assign_params(midivol):

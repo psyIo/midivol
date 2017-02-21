@@ -9,3 +9,5 @@ mido https://github.com/olemb/mido
 windows:
 nircmd http://www.nirsoft.net/utils/nircmd.html
 pygame.midi
+
+for service_win pywin32 https://sourceforge.net/projects/pywin32/
