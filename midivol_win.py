@@ -21,8 +21,7 @@ class NircmdMixer():
 			pass		
 		return result
 		
-	def setvolume(self, vol):		
-		# print 'volume {} val {}'.format(volume, val)#str(volume)  + str(val)#dev
+	def setvolume(self, vol):	
 		if vol != self.current_volume:			
 			volume = self.volume_to_int(vol)
 			call(["nircmd", "setsysvolume", str(volume)])			
@@ -51,12 +50,7 @@ class Midivol():
 		'''
 		Finalize midivol and run main listening loop
 		'''
-		# inputs = pygame.midi
-		# inputs.init()
-		# inputs = mido.get_input_names()	#dev	
-		# print self.devices #dev
-		if not self.device:			
-			# if len(inputs) == 0:
+		if not self.device:	
 			if self.inputs.get_count() == 0:
 				raise Exception('No available MIDI devices')
 			else:				
@@ -67,9 +61,6 @@ class Midivol():
 		else:
 			try:
 				self.device = int(self.device)
-				# if inputs.get_count() > dev_index: #pataisyti linux i girezta nelygybe
-					# self.device = inputs.get_device_info[dev_index][1]
-				# print self.device #dev
 			except ValueError:
 				raise Exception("Incorrect device parameter")	 	
 
@@ -83,7 +74,6 @@ class Midivol():
 				self.funky_list.append(self.control_gates)
 			
 			input = self.inputs.Input(self.device, 0)
-			# inport = mido.open_input(self.device)		
 			self.log_msg('Running using MIDI device: {}, max_vol: {}, filters: channel {} control {}'.format(
 				self.devices[self.device][1], self.max_volume, self.channel, self.control))	
 
@@ -94,8 +84,6 @@ class Midivol():
 					self.set_volume_from_midi_msg(msg)
 					if self.verbose:			
 						self.log_msg(msg)
-				# i += 1
-				# self.log_msg('Loop cycle ' + str(i))	
 				time.sleep(0.01)
 		else:
 			raise Exception('"{}" input device not found'.format(self.device))
