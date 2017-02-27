@@ -27,7 +27,7 @@ class AppServerSvc (win32serviceutil.ServiceFramework):
 
     def main(self):
         device_name = 'Launch Control'
-        self.midivol = Midivol(device=1) #set device ID here		
+        self.midivol = Midivol()
         if self.midivol.assign_device_by_name(device_name):
             self.midivol.build()
             self.log_msg_service(servicemanager.PYS_SERVICE_STARTED, 'running using device "{}"'.format(device_name))      
